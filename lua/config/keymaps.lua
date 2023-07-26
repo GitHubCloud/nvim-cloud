@@ -36,7 +36,7 @@ map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 
 map({ "n", "x" }, "gw", "*N", { desc = "Search word under cursor" })
-map({ "n", "i" }, "<c-s>", ":w<cr>", { desc = "Save buffer" })
+map("n", "<c-s>", ":w<cr>", { desc = "Save buffer" })
 map("n", "bd", ":bd<cr>", { desc = "Delete buffer" })
 
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
@@ -63,6 +63,24 @@ map("n", "<leader>L", "<cmd>:Lazy<cr>", { desc = "Lazy" })
 if not Util.has "trouble.nvim" then
   map("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" })
   map("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" })
+end
+
+-- toggle options
+map("n", "<leader>uf", require("plugins.lsp.format").toggle, { desc = "Toggle format on Save" })
+map("n", "<leader>us", function()
+  Util.toggle "spell"
+end, { desc = "Toggle Spelling" })
+map("n", "<leader>uw", function()
+  Util.toggle "wrap"
+end, { desc = "Toggle Word Wrap" })
+map("n", "<leader>ul", function()
+  Util.toggle("relativenumber", true)
+  Util.toggle "number"
+end, { desc = "Toggle Line Numbers" })
+if vim.lsp.inlay_hint then
+  map("n", "<leader>uh", function()
+    vim.lsp.inlay_hint(0, nil)
+  end, { desc = "Toggle Inlay Hints" })
 end
 
 -- windows
